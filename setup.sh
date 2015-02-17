@@ -4,23 +4,39 @@
 # config files.
 
 HOMEFILES_DIR=home
-HOMEFILES=`ls -1A ./$HOMEFILES_DIR/`
+#HOMEFILES=`ls -1A ./$HOMEFILES_DIR/`
 
 
 if [ `which pacman | wc -l` == 1 ]
 then
  sudo pacman -Syy
- sudo pacman -S --needed git bash-completion 2>/dev/zero
-
+ sudo pacman -S --needed git bash-completion curl 2>/dev/zero
+ curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
+ tar -xvzf package-query.tar.gz
+ cd package-query
+ makepkg -si
+ cd ..
+ curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
+ tar -xvzf yaourt.tar.gz
+ cd yaourt
+ makepkg -si
+ cd ..
+ #remove temp folders
+ rm -r yaourt package-query yaourt.tar.gz package-query.tar.gz
+ yaourt -S byobu
+ 
 elif [ `which apt-get | wc -l` == 1 ]
 then
- sudo apt-get update 2>/dev/zero
- sudo apt-get install git bash-completion
+ sudo apt-get update &> /dev/zero
+ sudo apt-get install git bash-completion byobu
 fi
 
 # create symlinks for config files
-for FNAME in ${HOMEFILES[@]}
-do
- ln -s `pwd`/$HOMEFILES_DIR/$FNAME ~/$FNAME
-done
+#for FNAME in ${HOMEFILES[@]}
+#do
+#  ln -s `pwd`/$HOMEFILES_DIR/$FNAME ~/$FNAME
+#done
+
+cp -r $HOMEFILES_DIR/. ~/
+byobu-enable
 
