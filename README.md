@@ -6,10 +6,10 @@ But you are free to use it too.
 
 ## Install guide:
 
-* clone this repository in a directory of your choice (must not be deleted in the future)
+* clone this repository in a directory of your choice
 * jump into the directory and execute:
 <pre>
 ./setup.sh
 </pre>
 
-The script will create symlinks to all the files in the right places (as long as the files are not present)
+The script will copy all the files in the right places (as long as the files are not present)
